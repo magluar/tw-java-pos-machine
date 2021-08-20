@@ -33,6 +33,7 @@ public class PosMachine {
         }
     }
 
-
-
+    private Receipt calculateAmount(List<Item> items) {
+        return null;
+    }
 }
