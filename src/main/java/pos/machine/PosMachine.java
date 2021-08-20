@@ -17,15 +17,22 @@ public class PosMachine {
                                 .distinct()
                                 .collect(Collectors.toList());
         for (String distinctItem : distinct) {
-            for (ItemInfo itemInfo: itemInfos) {
-                if (itemInfo.getBarcode().equals(distinctItem)){
-                    items.add(new Item(itemInfo.getName(),
-                            Collections.frequency(barcodes, distinctItem),
-                            itemInfo.getPrice(),
-                            Collections.frequency(barcodes, distinctItem) * itemInfo.getPrice()));
-                }
-            }
+            calculateItemSubTotal(barcodes, itemInfos, items, distinctItem);
         }
         return items;
     }
+
+    private void calculateItemSubTotal(List<String> barcodes, List<ItemInfo> itemInfos, List<Item> items, String distinctItem) {
+        for (ItemInfo itemInfo: itemInfos) {
+            if (itemInfo.getBarcode().equals(distinctItem)){
+                items.add(new Item(itemInfo.getName(),
+                        Collections.frequency(barcodes, distinctItem),
+                        itemInfo.getPrice(),
+                        Collections.frequency(barcodes, distinctItem) * itemInfo.getPrice()));
+            }
+        }
+    }
+
+
+
 }
