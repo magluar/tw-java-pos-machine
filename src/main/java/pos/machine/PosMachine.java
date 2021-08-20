@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 
 public class PosMachine {
     public String printReceipt(List<String> barcodes) {
-        return null;
+        List<Item> items = getItems(barcodes);
+        Receipt receipt = calculateAmount(items);
+        return formatReceipt(receipt);
     }
 
     private List<Item> getItems(List<String> barcodes) {
@@ -44,7 +46,7 @@ public class PosMachine {
     }
 
     private String formatReceipt(Receipt receipt) {
-        String formattedReceipt = "***<store earning no money>Receipt ***\n";
+        String formattedReceipt = "***<store earning no money>Receipt***\n";
         int subTotalPrice = 0;
         for (Item item : receipt.getItemDetails()) {
             formattedReceipt = formattedReceipt + "Name: " + item.getName() + ", Quantity: "
