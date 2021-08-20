@@ -34,6 +34,12 @@ public class PosMachine {
     }
 
     private Receipt calculateAmount(List<Item> items) {
-        return null;
+        int totalPrice = 0;
+
+        for (Item itemPrice: items) {
+            totalPrice += itemPrice.getSubTotal();
+        }
+
+        return new Receipt(items, totalPrice);
     }
 }
