@@ -45,11 +45,15 @@ public class PosMachine {
 
     private String formatReceipt(Receipt receipt) {
         String formattedReceipt = "***<store earning no money>Receipt ***\n";
+        int subTotalPrice = 0;
         for (Item item : receipt.getItemDetails()) {
             formattedReceipt = formattedReceipt + "Name: " + item.getName() + ", Quantity: "
                     + item.getQuantity() + ", Unit price: " + item.getUnitPrice()
                     + " (yuan), Subtotal: " + item.getSubTotal() + " (yuan)\n";
+            subTotalPrice += item.getSubTotal();
         }
-        return formattedReceipt;
+
+        return formattedReceipt + "----------------------\nTotal: "
+                + subTotalPrice + " (yuan)\n**********************";
     }
 }
