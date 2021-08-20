@@ -14,8 +14,8 @@ public class PosMachine {
         List<ItemInfo> itemInfos = ItemDataLoader.loadAllItemInfos();
         List<Item> items = new ArrayList<>();
         List<String> distinct = barcodes.stream()
-                                .distinct()
-                                .collect(Collectors.toList());
+                .distinct()
+                .collect(Collectors.toList());
         for (String distinctItem : distinct) {
             calculateItemSubTotal(barcodes, itemInfos, items, distinctItem);
         }
@@ -23,8 +23,8 @@ public class PosMachine {
     }
 
     private void calculateItemSubTotal(List<String> barcodes, List<ItemInfo> itemInfos, List<Item> items, String distinctItem) {
-        for (ItemInfo itemInfo: itemInfos) {
-            if (itemInfo.getBarcode().equals(distinctItem)){
+        for (ItemInfo itemInfo : itemInfos) {
+            if (itemInfo.getBarcode().equals(distinctItem)) {
                 items.add(new Item(itemInfo.getName(),
                         Collections.frequency(barcodes, distinctItem),
                         itemInfo.getPrice(),
@@ -36,10 +36,20 @@ public class PosMachine {
     private Receipt calculateAmount(List<Item> items) {
         int totalPrice = 0;
 
-        for (Item itemPrice: items) {
+        for (Item itemPrice : items) {
             totalPrice += itemPrice.getSubTotal();
         }
 
         return new Receipt(items, totalPrice);
+    }
+
+    private String formatReceipt(Receipt receipt) {
+        String formattedReceipt = "***<store earning no money>Receipt ***\n";
+        for (Item item : receipt.getItemDetails()) {
+            formattedReceipt = formattedReceipt + "Name: " + item.getName() + ", Quantity: "
+                    + item.getQuantity() + ", Unit price: " + item.getUnitPrice()
+                    + " (yuan), Subtotal: " + item.getSubTotal() + " (yuan)\n";
+        }
+        return formattedReceipt;
     }
 }
